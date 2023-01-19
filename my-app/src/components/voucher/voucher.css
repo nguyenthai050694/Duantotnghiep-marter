@@ -1,0 +1,13 @@
+.voucher-layout-main{
+    padding: 1rem;
+}
+.voucher-layout-main .table .update-voucher:hover{
+    background: linear-gradient(to right, #c72092, #38def0);
+}
+.voucher-layout-main .table .delete-voucher:hover{
+    background: linear-gradient(to right, #14e4b7, #a638f0);
+}
+.checkError{
+    margin-top: 5px;
+    color: red;
+}

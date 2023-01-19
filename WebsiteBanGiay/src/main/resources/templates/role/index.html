@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Service</title>
+    <style>
+        .loading {
+            background: rgba(0, 0, 0, .5);
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
+        .spinner-center {
+            top: 50%;
+            left: 50%;
+            position: absolute;
+        }
+    </style>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body ng-app="app">
+    <div class="container" ng-controller="myCtrl">
+        
+        <div class="create">
+            <div class="text-center">
+                <div ng-show="isShow" class="loading">
+                    <div class="spinner-border text-primary spinner-center" role="status">
+                    </div>
+                </div>
+            </div>
+            <form ng-submit="create()">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Role Name</label>
+                    <input type="text" class="form-control" placeholder="Enter Role Name" ng-model="role.roleName">
+                    <button class="btn btn-danger m-1">Thêm mới</button>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Role Service</h1>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in roleList">
+                            <td>{{$index + 1}}</td>
+                            <td class="id">{{x.id}}</td>
+                            <td class="name">{{x.roleName}}</td>
+                            <td>
+                                <button class="btn btn-danger" id="delete">Delete</button>
+                                <button class="btn btn-primary" id="open-modal" type="button">Update</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form>
+                            <label for="id" class="form-label">Id</label>
+                                <input type="text" name="" id="id" disabled class="form-control">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" ng-model="role.roleName" id="name" class="form-control">
+                                <button type="button" id="update">Update</button>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Bundle with Popper -->
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>  
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+<script src="../assets/js/angular.min.js"></script>
+<script src="../assets/js/roleMain.js"></script>
+</body>
+</html>
