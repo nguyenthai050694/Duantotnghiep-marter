@@ -23,6 +23,7 @@
     "multiselect-react-dropdown": "^2.0.25",
     "react": "latest",
     "react-bootstrap": "^2.7.0",
+    "react-confirm-alert": "^3.0.6",
     "react-dom": "latest",
     "react-hook-form": "^7.39.3",
     "react-icons": "^4.6.0",

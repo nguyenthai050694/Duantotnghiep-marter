@@ -199,6 +199,19 @@
     background-color: #fff;
     border: #000;
     border-radius: 100%;
+    margin: 0 3px;
+}
+
+.table-detail td {
+    border-width: 0;
+}
+
+.table-page th {
+    text-align: center;
+}
+
+.table-page td {
+    text-align: left;
 }
 
 /* end featured  */
