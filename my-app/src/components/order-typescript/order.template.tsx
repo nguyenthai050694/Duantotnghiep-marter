@@ -4,9 +4,10 @@ import { Container, Table } from 'reactstrap';
 import OrderComponent, { OrderDetailItem, OrderItem } from './order.component';
 import '../css/styles.css';
 import { Button, Modal, Row } from 'react-bootstrap';
-import { BsBagCheck, BsCheck, BsCheckCircle, BsFillEyeFill, BsXCircle } from "react-icons/bs";
+import { BsBagCheck, BsCheck, BsCheckCircle, BsFillEyeFill, BsTruck, BsXCircle } from "react-icons/bs";
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 import { STATUS_ORDER } from '../common/const';
+import EnhancedTable from '../common/table/table';
 
 interface OrederTemplate {
     self: OrderComponent
@@ -16,64 +17,114 @@ interface OrederTemplate {
 export default function OrederTemplate({ self }: OrederTemplate) {
     const { state } = self;
 
-    const [show, setShow] = useState(false);
+    const headCells = [
+        {
+            id: 'code',
+            align: 'center',
+            disablePadding: false,
+            label: 'Mã',
+        },
+        {
+            id: 'nameRecipient',
+            align: 'left',
+            disablePadding: false,
+            label: 'Nguời nhận',
+        },
+        {
+            id: 'telephone',
+            align: 'left',
+            disablePadding: false,
+            label: 'Điện thoại',
+        },
+        {
+            id: 'address',
+            align: 'left',
+            disablePadding: false,
+            label: 'Địa chỉ',
+        },
+        {
+            id: 'created',
+            align: 'left',
+            disablePadding: false,
+            label: 'Ngày đặt',
+        },
+        {
+            id: 'statusName',
+            align: 'left',
+            disablePadding: false,
+            label: 'Trạng thái',
+        },
+        {
+            id: 'action',
+            align: 'center',
+            disablePadding: false,
+            label: 'Hành động',
+            component: (item: any) => {
+                console.log(item);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => {
-        setShow(true)
-    };
+                return <>
+                    <button onClick={() => self.openModalDetail(item.id)}>
+                        <BsFillEyeFill title='Xem chi tiết' />
+                    </button>
+                    {item.status === 2 && <button onClick={() => self.handDeliveredOrder(item.id)}>
+                        <BsTruck title='Xác nhận đang giao hàng' />
+                    </button>}
+                    {/* {item.status === 3 && <button onClick={() => self.handDeliveredOrder(item.id)}>
+                                                <BsCheckCircle title='Xác nhận đã giao hàng' />
+                                            </button>} */}
+                    {item.status !== 0 && <button onClick={() => self.handCancelOrder(item.id)}>
+                        <BsXCircle title='Hủy đơn hàng' />
+                    </button>}
+                </>
+            }
+        },
+    ];
+
+    const headCellsDetail = [
+        {
+            id: 'code',
+            align: 'center',
+            disablePadding: false,
+            label: 'Ảnh sản phẩm',
+            component: (item: any) => {
+                console.log(item);
+
+                return <>
+                    <img src={item.imageUrl} width="150px" height="auto" />
+                </>
+            }
+        },
+        {
+            id: 'name_Product',
+            align: 'left',
+            disablePadding: false,
+            label: 'Tên sản phẩm',
+        },
+        {
+            id: 'sizeName',
+            align: 'right',
+            disablePadding: false,
+            label: 'Size',
+        },
+        {
+            id: 'quantity',
+            align: 'right',
+            disablePadding: false,
+            label: 'Số lượng',
+        },
+        {
+            id: 'price',
+            align: 'right',
+            disablePadding: false,
+            label: 'Đơn giá (VND)',
+        },
+    ];
     return (
         <div className='main-page'>
             <Container>
                 <Row>
                     <ToastContainer />
-
-                    <Table striped bordered hover className='table-page'>
-                        <thead>
-                            <tr>
-                                <th>Mã</th>
-                                <th>Người nhận</th>
-                                <th>Điện thoại</th>
-                                <th>Địa chỉ</th>
-                                <th>Ngày đặt</th>
-                                <th>Trạng thái</th>
-                                <th>Hành động</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {!state.isLoading &&
-                                state.lstOrder &&
-                                state.lstOrder.length > 0 &&
-                                state.lstOrder.map((item: OrderItem, index) => (
-                                    <tr key={index}>
-                                        <td id="category"
-                                        >{item.code}</td>
-                                        <td id="category">{item.nameRecipient}</td>
-                                        {/* <td id="price">{item.price}</td> */}
-                                        <td id="quantity">{item.telephone}</td>
-                                        <td id="category">{item.address}</td>
-                                        <td id="description">{item.created}</td>
-                                        <td id="description">{item.statusName}</td>
-                                        <td style={{ 'textAlign': 'center' }}>
-                                            <button onClick={() => self.openModalDetail(item.id)}>
-                                                <BsFillEyeFill title='Xem chi tiết' />
-                                            </button>
-                                            {item.status === 2 && <button onClick={() => self.handDeliveredOrder(item.id)}>
-                                                <BsCheckCircle title='Xác nhận đã giao hàng' />
-                                            </button>}
-                                            {item.status !== 0 && <button onClick={() => self.handCancelOrder(item.id)}>
-                                                <BsXCircle title='Hủy đơn hàng' />
-                                            </button>}
-                                        </td>
-                                    </tr>
-                                ))}
-                            {state.isLoading && (
-                                <tr>
-                                    <h3>Vui lòng đợi...</h3>
-                                </tr>
-                            )}
-                        </tbody>
-                    </Table>
+                    <EnhancedTable headCells={headCells} rows={state.lstOrder} />
                 </Row>
             </Container>
 
@@ -117,7 +168,8 @@ export default function OrederTemplate({ self }: OrederTemplate) {
                         </Table>
                     </div>
                     <div className='modal-list'>
-                        <Table striped bordered hover className='table-page'>
+                        <EnhancedTable headCells={headCellsDetail} rows={state.orderDetailList} total={`${state.totalPrice} VND`} />
+                        {/* <Table striped bordered hover className='table-page'>
                             <thead>
                                 <tr>
                                     <th>Ảnh sản phẩm</th>
@@ -153,7 +205,7 @@ export default function OrederTemplate({ self }: OrederTemplate) {
                                     </td>
                                 </tr>
                             </tbody>
-                        </Table>
+                        </Table> */}
                     </div>
                 </Modal.Body>
                 <Modal.Footer>

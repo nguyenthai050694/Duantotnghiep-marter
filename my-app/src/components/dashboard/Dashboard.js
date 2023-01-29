@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 
 const Dashboard = () => {
@@ -11,42 +13,42 @@ const Dashboard = () => {
     const [option, setOption] = useState({});
 
     useEffect(() => {
-        reportByProduct(1, 8)
-            .then((resp) => {
-                setProduct(resp.data.content);
-            })
-            .catch((error) => console.log(error));
+        // reportByProduct(1, 8)
+        //     .then((resp) => {
+        //         setProduct(resp.data.content);
+        //     })
+        //     .catch((error) => console.log(error));
 
-        reportAmountYear()
-            .then((resp) => {
-                setYear(resp.data);
-                const result = resp.data.reduce((price, item) => price + item.total, 0);
-                setTotal(result);
-            })
-            .catch((error) => console.log(error));
+        // reportAmountYear()
+        //     .then((resp) => {
+        //         setYear(resp.data);
+        //         const result = resp.data.reduce((price, item) => price + item.total, 0);
+        //         setTotal(result);
+        //     })
+        //     .catch((error) => console.log(error));
 
-        countOrder()
-            .then((resp) => setCountOr(resp.data))
-            .catch((error) => console.log(error));
+        // countOrder()
+        //     .then((resp) => setCountOr(resp.data))
+        //     .catch((error) => console.log(error));
 
-        countAccount()
-            .then((resp) => setCountAcc(resp.data))
-            .catch((error) => console.log(error));
+        // countAccount()
+        //     .then((resp) => setCountAcc(resp.data))
+        //     .catch((error) => console.log(error));
 
-        countProduct()
-            .then((resp) => setCountPro(resp.data))
-            .catch((error) => console.log(error));
+        // countProduct()
+        //     .then((resp) => setCountPro(resp.data))
+        //     .catch((error) => console.log(error));
 
-        countOrderByName()
-            .then((resp) => {
-                const x = resp.data.map((item) => item.name);
-                setOption({
-                    labels: x,
-                });
-                const y = resp.data.map((item) => item.count);
-                setSeri(y);
-            })
-            .catch((error) => console.log(error));
+        // countOrderByName()
+        //     .then((resp) => {
+        //         const x = resp.data.map((item) => item.name);
+        //         setOption({
+        //             labels: x,
+        //         });
+        //         const y = resp.data.map((item) => item.count);
+        //         setSeri(y);
+        //     })
+        //     .catch((error) => console.log(error));
     }, []);
 
     return (
@@ -56,7 +58,7 @@ const Dashboard = () => {
                 <div className="col-6">
                     <div className="row container-fluid">
                         <div className="col">
-                            <StatusCard
+                            {/* <StatusCard
                                 icon={statusCards[0].icon}
                                 count={countAcc}
                                 title={`Khách hàng`}
@@ -75,13 +77,13 @@ const Dashboard = () => {
                                 icon={statusCards[2].icon}
                                 count={total && total.toLocaleString()}
                                 title={`Tổng doanh thu`}
-                            />
+                            /> */}
                         </div>
                     </div>
                 </div>
                 <div className="col-6">
                     <div className="card full-height">
-                        <Chart options={option} series={seri} type="donut" height="100%" />
+                        {/* <Chart options={option} series={seri} type="donut" height="100%" /> */}
                     </div>
                 </div>
                 <div className="col-6">

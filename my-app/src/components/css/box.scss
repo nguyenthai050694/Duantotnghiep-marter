@@ -1,0 +1,57 @@
+.box-info {
+    position: relative;
+    border: 1px solid #bebebe;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: left;
+    font-weight: bold;
+    line-height: 1;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+
+    .box-info-title {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .box-info-content {
+        font-size: 30px;
+    }
+
+    .box-info-icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+
+        .icon-up {
+            color: green;
+        }
+
+        .icon-down {
+            color: red;
+        }
+    }
+
+    &.box-info-green {
+        .box-info-content {
+            color: green;
+        }
+    }
+
+    &.box-info-red {
+        .box-info-content {
+            color: red;
+        }
+    }
+
+    &.box-info-yellow {
+        .box-info-content {
+            color: #e3e317;
+        }
+    }
+
+    &.box-info-blue {
+        .box-info-content {
+            color: #0d6efd;
+        }
+    }
+}

@@ -197,9 +197,9 @@
     width: 30px;
     color: #000;
     background-color: #fff;
-    border: #000;
     border-radius: 100%;
     margin: 0 3px;
+    line-height: 1;
 }
 
 .table-detail td {

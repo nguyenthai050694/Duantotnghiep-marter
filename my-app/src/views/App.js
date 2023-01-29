@@ -22,6 +22,8 @@ import ProductOne from "../components/HOME/ProductOne";
 
 import { Routes, Route } from "react-router-dom";
 import OrderComponent from "../components/order-typescript/order.component";
+import Dashboard from "../components/dashboard/Dashboard";
+import DashboardComponent from "../components/dashboard-typescript/dashboard.component";
 
 function App() {
   return (
@@ -87,8 +89,7 @@ function App() {
               element={
                 <>
                   {" "}
-                  <Product />
-                  <User />
+                  <DashboardComponent />
                 </>
               }
             />
@@ -134,6 +135,15 @@ function App() {
                 <>
                   {" "}
                   <OrderComponent />
+                </>
+              }
+            />
+            <Route
+              path="dashboard"
+              element={
+                <>
+                  {" "}
+                  <DashboardComponent />
                 </>
               }
             />
