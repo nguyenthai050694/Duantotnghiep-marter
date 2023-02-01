@@ -34,6 +34,16 @@ export interface OrderDetailItem {
     price: number
 }
 
+interface Count {
+    count: number,
+    name: string,
+}
+
+interface Revenue {
+    money: number,
+    percen: number,
+}
+
 export interface OrderState {
     isLoading: Boolean,
     lstOrder: OrderItem[],
@@ -42,12 +52,16 @@ export interface OrderState {
     orderDetailList: OrderDetailItem[],
     images: any[],
     totalPrice: number,
+    count: Count[],
+    revenue: Revenue[],
 }
 
 export default class DashboardComponent extends React.Component {
     // create state
     state = {
         isLoading: false,
+        count: [],
+        revenue: [],
         lstOrder: [],
         isModal: false,
         orderDetailItem: {} as OrderItem,
@@ -87,54 +101,36 @@ export default class DashboardComponent extends React.Component {
 
         // Call Api order/findAll
         const res = await axios.get(
-            `${process.env.REACT_APP_API_KEY}/order/findAll`, this.config
+            `${process.env.REACT_APP_API_KEY}/dashboard`, this.config
         );
 
-        // Map lstOrder
-        const lstOrder = res.data && res.data.map((item: OrderItem) => {
-            let statusName = ''
-            switch (item.status) {
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                    statusName = STATUS_ORDER[item.status]
-                    break
-            }
-            return {
-                ...item,
-                created: moment(item.created as any).format('DD/MM/YYYY HH:mm:ss'),
-                statusName,
-            }
-        })
-
         // Get list image
-        const imagesListRef = ref(storage, "images/");
-        listAll(imagesListRef).then((response) => {
-            let images = [] as any[]
-            response.items.forEach((item, index) => {
-                getDownloadURL(item).then((url) => {
-                    images.push({
-                        nameImg: item.name,
-                        url,
-                    })
+        // const imagesListRef = ref(storage, "images/");
+        // listAll(imagesListRef).then((response) => {
+        //     let images = [] as any[]
+        //     response.items.forEach((item, index) => {
+        //         getDownloadURL(item).then((url) => {
+        //             images.push({
+        //                 nameImg: item.name,
+        //                 url,
+        //             })
 
-                    if (index === response.items.length - 1) {
-                        // Set state
-                        this.setState({
-                            ...this.state,
-                            images,
-                        })
-                    }
-                });
-            });
-        });
+        //             if (index === response.items.length - 1) {
+        //                 // Set state
+        //                 this.setState({
+        //                     ...this.state,
+        //                     images,
+        //                 })
+        //             }
+        //         });
+        //     });
+        // });
 
         // Set state
         this.setState({
             ...this.state,
-            lstOrder: lstOrder,
+            count: res.data.count,
+            revenue: res.data.revenue,
             isLoading: false,
         })
 

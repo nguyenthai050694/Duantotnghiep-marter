@@ -28,4 +28,8 @@ public interface UserDao extends JpaRepository<User, Integer> {
 
 	@Query(value = "SELECT * FROM `user` n where n.email = :email", nativeQuery = true)
 	User findUsersByUserEmail(@Param("email") String userEmail);
+
+	//count all user
+	@Query("SELECT COUNT(u) FROM User u")
+	long countUser();
 }

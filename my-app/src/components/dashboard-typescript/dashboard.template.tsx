@@ -200,25 +200,25 @@ export default function DashboardTemplate({ self }: DashboardTemplate) {
                                     setValue(newValue);
                                 }}
                             >
-                                <BottomNavigationAction label="Khách hàng (30)" icon={<PeopleIcon />} />
-                                <BottomNavigationAction label="Sản phẩm(670)" icon={<StorageIcon />} />
-                                <BottomNavigationAction label="Đơn hàng(13)" icon={<EmailIcon />} />
+                                <BottomNavigationAction label={`${state.count[0] && state.count[0].name}(${state.count[0] && state.count[0].count})`} icon={<PeopleIcon />} />
+                                <BottomNavigationAction label={`${state.count[1] && state.count[1].name}(${state.count[1] && state.count[1].count})`} icon={<StorageIcon />} />
+                                <BottomNavigationAction label={`${state.count[2] && state.count[2].name}(${state.count[2] && state.count[2].count})`} icon={<EmailIcon />} />
                             </BottomNavigation>
                         </Box>
                     </Col>
                 </Row>
                 <Row className='dashboard-row'>
                     <Col md={3}>
-                        <BoxInfo color='green' title='Trong 1 ngày' content='1000000 VND' percen={10} />
+                        <BoxInfo color='green' title='Trong 1 ngày' content={`${state.revenue[0]?.money} VND`} percen={state.revenue[0]?.percen} />
                     </Col>
                     <Col md={3}>
-                        <BoxInfo color='red' title='Trong 1 tuần' content='1000000 VND' percen={-10} />
+                        <BoxInfo color='red' title='Trong 1 tuần' content={`${state.revenue[1]?.money} VND`} percen={state.revenue[1]?.percen} />
                     </Col>
                     <Col md={3}>
-                        <BoxInfo color='yellow' title='Trong 1 tháng' content='1000000 VND' percen={40} />
+                        <BoxInfo color='yellow' title='Trong 1 tháng' content={`${state.revenue[2]?.money} VND`} percen={state.revenue[2]?.percen} />
                     </Col>
                     <Col md={3}>
-                        <BoxInfo color='blue' title='Trong 1 năm' content='1000000 VND' percen={50} />
+                        <BoxInfo color='blue' title='Trong 1 năm' content={`${state.revenue[3]?.money} VND`} percen={state.revenue[3]?.percen} />
                     </Col>
                 </Row>
 

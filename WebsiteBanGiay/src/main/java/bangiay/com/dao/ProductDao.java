@@ -29,4 +29,8 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 
 	@Query("SELECT p FROM Product p WHERE p.status =1 order by CREATED desc")
 	List<Product> findTop3New();
+
+	//Count all product
+	@Query("SELECT COUNT(p) FROM Product p")
+	long countAllProduct();
 }
