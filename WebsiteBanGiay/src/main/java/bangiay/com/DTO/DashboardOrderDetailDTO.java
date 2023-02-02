@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class DashboardOrderDetailDTO {
 	private Integer id = 0;
-	private Date create;
+	private String name;
 	private Integer quantity = 0;
-	private Integer price = 0;
+	private Double revenue;
 }

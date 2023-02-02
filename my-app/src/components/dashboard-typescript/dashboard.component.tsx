@@ -44,6 +44,18 @@ interface Revenue {
     percen: number,
 }
 
+interface CommonValue {
+    key: string,
+    value: number,
+}
+
+interface ProductItem {
+    id: number,
+    name: string,
+    quantity: number,
+    revenue: number,
+}
+
 export interface OrderState {
     isLoading: Boolean,
     lstOrder: OrderItem[],
@@ -54,6 +66,11 @@ export interface OrderState {
     totalPrice: number,
     count: Count[],
     revenue: Revenue[],
+    dataChartOrder: CommonValue[],
+    countOrder: CommonValue[],
+    dataChartRevenueByDay: CommonValue[],
+    dataChartRevenueByMonth: CommonValue[],
+    listProduct: ProductItem[],
 }
 
 export default class DashboardComponent extends React.Component {
@@ -68,6 +85,11 @@ export default class DashboardComponent extends React.Component {
         orderDetailList: [],
         images: [],
         totalPrice: 0,
+        dataChartOrder: [],
+        countOrder: [],
+        dataChartRevenueByDay: [],
+        dataChartRevenueByMonth: [],
+        listProduct: []
     } as OrderState
 
     // Get token
@@ -131,6 +153,11 @@ export default class DashboardComponent extends React.Component {
             ...this.state,
             count: res.data.count,
             revenue: res.data.revenue,
+            dataChartOrder: res.data.dataChartOrder,
+            countOrder: res.data.countOrder,
+            dataChartRevenueByDay: res.data.dataChartRevenueByDay,
+            dataChartRevenueByMonth: res.data.dataChartRevenueByMonth,
+            listProduct: res.data.listProduct,
             isLoading: false,
         })
 

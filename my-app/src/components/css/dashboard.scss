@@ -11,7 +11,7 @@
     }
 
     .order-box {
-        margin-bottom: 20px;
+        padding: 20px 0;
 
         .order-title {
             font-weight: bold;
@@ -28,5 +28,28 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
+        .order-icon {
+            svg {
+                font-size: 40px;
+                color: orange;
+            }
+        }
     }
+}
+
+.br-l-2 {
+    border-left: 2px solid #bebebe;
+}
+
+.br-r-2 {
+    border-right: 2px solid #bebebe;
+}
+
+.br-t-2 {
+    border-top: 2px solid #bebebe;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
 }

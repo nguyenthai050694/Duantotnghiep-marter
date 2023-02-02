@@ -13,7 +13,6 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DashboardDTO {
-	private Integer id;
 
 	private List<DashboardCountDTO> count = new ArrayList<>();
 
@@ -22,4 +21,12 @@ public class DashboardDTO {
 	private List<DashboardRevenueDTO> revenue = new ArrayList<>();
 
 	private List<CommonValueDTO> dataChartOrder = new ArrayList<>();
+
+	private List<CommonValueDTO> countOrder = new ArrayList<>();
+
+	private List<CommonValueDTO> dataChartRevenueByDay = new ArrayList<>();
+
+	private List<CommonValueDTO> dataChartRevenueByMonth = new ArrayList<>();
+
+	private List<DashboardOrderDetailDTO> listProduct = new ArrayList<>();
 }
