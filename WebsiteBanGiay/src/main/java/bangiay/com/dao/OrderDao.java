@@ -16,6 +16,9 @@ public interface OrderDao extends JpaRepository <Order, Integer>{
 	@Query("SELECT o FROM Order o WHERE o.user.id=?1 or o.telephone=?1")
 	List<Order> getOrderBySize_ID(Integer user_IdOrTelephone);
 
+	@Query("SELECT o FROM Order o WHERE o.status=?1")
+	List<Order> findByStatus(Integer status);
+
 	//lấy danh sách order có trạng thái theo yêu cầu
 //	@Query("select o from orders o where o.STATUS=?")
 //	List<Orders> getOrderStatus(Integer status);

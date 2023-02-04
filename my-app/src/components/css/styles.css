@@ -214,4 +214,20 @@
     text-align: left;
 }
 
+.order-search {
+    margin-bottom: 15px !important;
+}
+
+/* .order-search .MuiInputBase-input {
+    padding: 10px;
+} */
+
+/* .order-search .MuiFormLabel-root {
+    top: -4px;
+} */
+
+.MuiBox-root {
+    padding-top: 10px;
+}
+
 /* end featured  */

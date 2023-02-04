@@ -12,6 +12,8 @@ public interface OrderService {
 
 	public List<OrderDTO> findAll();
 
+	public List<Order> findByStatus(Integer status);
+
 	Page<OrderDTO> findAll(Pageable pageable);
 
 	public List<OrderDTO> findOrderBySize_ID(Integer user_IdOrTelephone);

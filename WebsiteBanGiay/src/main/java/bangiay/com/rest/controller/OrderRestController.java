@@ -2,6 +2,7 @@ package bangiay.com.rest.controller;
 
 import java.util.List;
 
+import bangiay.com.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,6 +33,11 @@ public class OrderRestController {
 	@GetMapping("/findAll")
 	public List<OrderDTO> findAll() {
 		return this.orderService.findAll();
+	}
+
+	@GetMapping("/search")
+	public List<Order> findByStatus(@RequestParam Integer status) {
+		return this.orderService.findByStatus(status);
 	}
 
 	@GetMapping("/select")

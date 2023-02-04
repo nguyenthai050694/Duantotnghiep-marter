@@ -209,8 +209,25 @@ public class DashboardSeviceImpl implements DashboardService {
 
 	public void getListProduct(DashboardDTO res) {
 		List<Map<String, Object>> listProductDetail = productDao.getListProductOrderByRevenue();
+		Map<Integer,DashboardOrderDetailDTO> mapProduct = new HashMap<>();
+		List<Integer> keyMap = new ArrayList<>();
 		for (Map<String, Object> item : listProductDetail) {
-			res.getListProduct().add(new DashboardOrderDetailDTO((Integer) item.get("id"),(String) item.get("name"),((BigDecimal) item.get("order_quantity")) != null ? ((BigDecimal) item.get("order_quantity")).intValue() : 0,item.get("total") != null ? (Double) item.get("total") : 0));
+			Double total = item.get("total") != null ? (Double) item.get("total") : 0;
+			Integer key = (Integer) item.get("id");
+			if(mapProduct.containsKey(key)) {
+				DashboardOrderDetailDTO itemMap = mapProduct.get(key);
+				itemMap.setQuantity(itemMap.getQuantity() + (item.get("order_quantity") != null ? ((BigDecimal) item.get("order_quantity")).intValue() : 0));
+				itemMap.setRevenue(itemMap.getRevenue() + (item.get("total") != null ? ((Double) item.get("total")) : 0));
+				mapProduct.put(key, itemMap);
+			} else {
+				keyMap.add((Integer) item.get("id"));
+				mapProduct.put((Integer) item.get("id"),new DashboardOrderDetailDTO((Integer) item.get("id"),(String) item.get("name"),((BigDecimal) item.get("order_quantity")) != null ? ((BigDecimal) item.get("order_quantity")).intValue() : 0,item.get("total") != null ? (Double) item.get("total") : 0,(String) item.get("image")));
+			}
+//			res.getListProduct().add(new DashboardOrderDetailDTO((Integer) item.get("id"),(String) item.get("name"),((BigDecimal) item.get("order_quantity")) != null ? ((BigDecimal) item.get("order_quantity")).intValue() : 0,item.get("total") != null ? (Double) item.get("total") : 0,(String) item.get("image")));
+		}
+
+		for(Integer key : keyMap) {
+			res.getListProduct().add(mapProduct.get(key));
 		}
 	}
 

@@ -42,6 +42,7 @@ export interface OrderState {
     orderDetailList: OrderDetailItem[],
     images: any[],
     totalPrice: number,
+    status: number,
 }
 
 export default class OrderComponent extends React.Component {
@@ -54,6 +55,7 @@ export default class OrderComponent extends React.Component {
         orderDetailList: [],
         images: [],
         totalPrice: 0,
+        status: 99,
     } as OrderState
 
     // Get token
@@ -269,5 +271,36 @@ export default class OrderComponent extends React.Component {
             ]
         });
 
+    }
+
+    handChangeStatus = async (e: any) => {
+
+
+        // Call Api order/find/id
+        const res = await axios.get(
+            `${process.env.REACT_APP_API_KEY}/order/search?status=${e.target.value}`, this.config
+        ) as any;
+
+        this.setState({
+            ...this.state,
+            status: e.target.value,
+            lstOrder: res.data.map((item: OrderItem) => {
+                let statusName = ''
+                switch (item.status) {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                        statusName = STATUS_ORDER[item.status]
+                        break
+                }
+                return {
+                    ...item,
+                    created: moment(item.created as any).format('DD/MM/YYYY HH:mm:ss'),
+                    statusName,
+                }
+            }),
+        })
     }
 }

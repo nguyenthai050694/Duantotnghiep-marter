@@ -54,6 +54,8 @@ interface ProductItem {
     name: string,
     quantity: number,
     revenue: number,
+    imageUrl: string,
+    image: string,
 }
 
 export interface OrderState {
@@ -126,40 +128,69 @@ export default class DashboardComponent extends React.Component {
             `${process.env.REACT_APP_API_KEY}/dashboard`, this.config
         );
 
-        // Get list image
-        // const imagesListRef = ref(storage, "images/");
-        // listAll(imagesListRef).then((response) => {
-        //     let images = [] as any[]
-        //     response.items.forEach((item, index) => {
-        //         getDownloadURL(item).then((url) => {
-        //             images.push({
-        //                 nameImg: item.name,
-        //                 url,
-        //             })
+        //Get list image
+        const imagesListRef = ref(storage, "images/");
+        listAll(imagesListRef).then((response) => {
+            let images = [] as any[]
+            response.items.forEach((item, index) => {
+                getDownloadURL(item).then((url) => {
+                    images.push({
+                        nameImg: item.name,
+                        url,
+                    })
 
-        //             if (index === response.items.length - 1) {
-        //                 // Set state
-        //                 this.setState({
-        //                     ...this.state,
-        //                     images,
-        //                 })
+                    if (index === response.items.length - 1) {
+                        // Set state
+                        this.setState({
+                            ...this.state,
+                            images,
+                            count: res.data.count,
+                            revenue: res.data.revenue,
+                            dataChartOrder: res.data.dataChartOrder,
+                            countOrder: res.data.countOrder,
+                            dataChartRevenueByDay: res.data.dataChartRevenueByDay,
+                            dataChartRevenueByMonth: res.data.dataChartRevenueByMonth,
+                            listProduct: res.data.listProduct.map((item: any) => {
+
+                                const itemImage = images.find(e => e.nameImg === item.image)
+                                return {
+                                    ...item,
+                                    imageUrl: itemImage ? itemImage.url : '',
+                                }
+                            }),
+                            isLoading: false,
+                        })
+                    }
+                });
+            });
+        });
+
+
+
+        // setTimeout(() => {
+        //     // Set state
+        //     this.setState({
+        //         ...this.state,
+        //         count: res.data.count,
+        //         revenue: res.data.revenue,
+        //         dataChartOrder: res.data.dataChartOrder,
+        //         countOrder: res.data.countOrder,
+        //         dataChartRevenueByDay: res.data.dataChartRevenueByDay,
+        //         dataChartRevenueByMonth: res.data.dataChartRevenueByMonth,
+        //         listProduct: res.data.listProduct.map((item: any) => {
+        //             console.log(this.state.images);
+
+        //             const itemImage = this.state.images.find(e => e.nameImg === item.image)
+        //             return {
+        //                 ...item,
+        //                 imageUrl: itemImage ? itemImage.url : '',
         //             }
-        //         });
-        //     });
-        // });
+        //         }),
+        //         isLoading: false,
+        //     })
+        // }, 100);
 
-        // Set state
-        this.setState({
-            ...this.state,
-            count: res.data.count,
-            revenue: res.data.revenue,
-            dataChartOrder: res.data.dataChartOrder,
-            countOrder: res.data.countOrder,
-            dataChartRevenueByDay: res.data.dataChartRevenueByDay,
-            dataChartRevenueByMonth: res.data.dataChartRevenueByMonth,
-            listProduct: res.data.listProduct,
-            isLoading: false,
-        })
+
 
     }
 

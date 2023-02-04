@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ToastContainer } from 'react-toastify';
-import { Container, Table } from 'reactstrap';
+import { Col, Container, Table } from 'reactstrap';
 import OrderComponent, { OrderDetailItem, OrderItem } from './order.component';
 import '../css/styles.css';
 import { Button, Modal, Row } from 'react-bootstrap';
@@ -8,6 +8,11 @@ import { BsBagCheck, BsCheck, BsCheckCircle, BsFillEyeFill, BsTruck, BsXCircle }
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 import { STATUS_ORDER } from '../common/const';
 import EnhancedTable from '../common/table/table';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Box from '@mui/material/Box';
 
 interface OrederTemplate {
     self: OrderComponent
@@ -19,7 +24,7 @@ export default function OrederTemplate({ self }: OrederTemplate) {
 
     const headCells = [
         {
-            id: 'code',
+            id: 'id',
             align: 'center',
             disablePadding: false,
             label: 'Mã',
@@ -87,8 +92,6 @@ export default function OrederTemplate({ self }: OrederTemplate) {
             disablePadding: false,
             label: 'Ảnh sản phẩm',
             component: (item: any) => {
-                console.log(item);
-
                 return <>
                     <img src={item.imageUrl} width="150px" height="auto" />
                 </>
@@ -119,11 +122,40 @@ export default function OrederTemplate({ self }: OrederTemplate) {
             label: 'Đơn giá (VND)',
         },
     ];
+
+    const [age, setAge] = React.useState('');
+
+    const handleChange = (event: any) => {
+        setAge(event.target.value);
+    };
     return (
         <div className='main-page'>
             <Container>
                 <Row>
                     <ToastContainer />
+                    <Col md={9} ></Col>
+                    <Col md={3} >
+                        <Box sx={{ minWidth: 200 }}>
+                            <FormControl fullWidth className='order-search'>
+                                <InputLabel id="demo-simple-select-label">Trạng thái</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={state.status}
+                                    label="Trạng thái"
+                                    onChange={(val: any) => { self.handChangeStatus(val) }}
+                                >
+                                    <MenuItem value={99}>Tất cả</MenuItem>
+                                    <MenuItem value={1}>Chưa thanh toán</MenuItem>
+                                    <MenuItem value={2}>Đã thanh toán</MenuItem>
+                                    <MenuItem value={3}>Chờ giao hàng</MenuItem>
+                                    <MenuItem value={4}>Đã giao hàng</MenuItem>
+                                    <MenuItem value={5}>Hoàn tất</MenuItem>
+                                    <MenuItem value={0}>Hủy</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
+                    </Col>
                     <EnhancedTable headCells={headCells} rows={state.lstOrder} />
                 </Row>
             </Container>

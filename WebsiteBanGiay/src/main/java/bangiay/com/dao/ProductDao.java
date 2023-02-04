@@ -37,7 +37,7 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 	long countAllProduct();
 
 	@Query(
-			value = "SELECT p.ID, p.NAME, d.ORDER_QUANTITY, d.TOTAL FROM product p LEFT JOIN size s ON p.ID = s.PRODUCT_ID LEFT JOIN (" +
+			value = "SELECT p.ID, p.NAME, d.ORDER_QUANTITY, d.TOTAL, (SELECT url FROM media WHERE PRODUCT_ID = p.ID LIMIT 1) as image FROM product p LEFT JOIN size s ON p.ID = s.PRODUCT_ID LEFT JOIN (" +
 					"SELECT od.SIZE_ID,SUM(od.QUANTITY) as ORDER_QUANTITY, SUM(od.QUANTITY*od.PRICE) as TOTAL FROM order_detail od, orders o WHERE o.status = 4 AND od.ORDER_ID = o.id " +
 					") as d ON s.ID = d.SIZE_ID" +
 					" ORDER BY d.TOTAL DESC",
