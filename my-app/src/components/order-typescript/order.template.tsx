@@ -74,9 +74,9 @@ export default function OrederTemplate({ self }: OrederTemplate) {
                     {item.status === 2 && <button onClick={() => self.handDeliveredOrder(item.id)}>
                         <BsTruck title='Xác nhận đang giao hàng' />
                     </button>}
-                    {/* {item.status === 3 && <button onClick={() => self.handDeliveredOrder(item.id)}>
-                                                <BsCheckCircle title='Xác nhận đã giao hàng' />
-                                            </button>} */}
+                    {item.status === 3 && <button onClick={() => self.handCompletedOrder(item.id)}>
+                        <BsCheckCircle title='Xác nhận hoàn tất đơn hàng' />
+                    </button>}
                     {item.status !== 0 && <button onClick={() => self.handCancelOrder(item.id)}>
                         <BsXCircle title='Hủy đơn hàng' />
                     </button>}
@@ -146,11 +146,11 @@ export default function OrederTemplate({ self }: OrederTemplate) {
                                     onChange={(val: any) => { self.handChangeStatus(val) }}
                                 >
                                     <MenuItem value={99}>Tất cả</MenuItem>
-                                    <MenuItem value={1}>Chưa thanh toán</MenuItem>
-                                    <MenuItem value={2}>Đã thanh toán</MenuItem>
-                                    <MenuItem value={3}>Chờ giao hàng</MenuItem>
-                                    <MenuItem value={4}>Đã giao hàng</MenuItem>
-                                    <MenuItem value={5}>Hoàn tất</MenuItem>
+                                    <MenuItem value={1}>Chờ thanh toán</MenuItem>
+                                    {/* <MenuItem value={2}>Đã thanh toán</MenuItem> */}
+                                    <MenuItem value={2}>Chờ giao hàng</MenuItem>
+                                    <MenuItem value={3}>Đã giao hàng</MenuItem>
+                                    <MenuItem value={4}>Hoàn tất</MenuItem>
                                     <MenuItem value={0}>Hủy</MenuItem>
                                 </Select>
                             </FormControl>
@@ -201,43 +201,6 @@ export default function OrederTemplate({ self }: OrederTemplate) {
                     </div>
                     <div className='modal-list'>
                         <EnhancedTable headCells={headCellsDetail} rows={state.orderDetailList} total={`${state.totalPrice} VND`} />
-                        {/* <Table striped bordered hover className='table-page'>
-                            <thead>
-                                <tr>
-                                    <th>Ảnh sản phẩm</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Size</th>
-                                    <th>Số lượng</th>
-                                    <th>Đơn giá (VND)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    state.orderDetailList &&
-                                    state.orderDetailList.length > 0 &&
-                                    state.orderDetailList.map((item: OrderDetailItem, index) => (
-                                        <tr key={index}>
-                                            <td id="category">
-                                                <img src={item.imageUrl} width="150px" height="auto" />
-                                            </td>
-                                            <td id="category">{item.name_Product}</td>
-                                            <td id="description" style={{ 'textAlign': 'right' }}>{item.sizeName}</td>
-                                            <td id="quantity" style={{ 'textAlign': 'right' }}>{item.quantity && item.quantity.toString()}</td>
-                                            <td id="category" style={{ 'textAlign': 'right' }}>{item.price && item.price.toString()}</td>
-
-                                        </tr>
-                                    ))
-                                }
-                                <tr>
-                                    <td>
-                                        <h4>Tổng</h4>
-                                    </td>
-                                    <td colSpan={4} style={{ 'textAlign': 'right' }}>
-                                        {`${state.totalPrice} VND`}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </Table> */}
                     </div>
                 </Modal.Body>
                 <Modal.Footer>

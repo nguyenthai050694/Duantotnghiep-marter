@@ -203,7 +203,7 @@ public class DashboardSeviceImpl implements DashboardService {
 	public void getCountOrder(DashboardDTO res) {
 		res.getCountOrder().add(new CommonValueDTO("Đơn hàng mới",orderDao.countOrderByStatus(1)));
 		res.getCountOrder().add(new CommonValueDTO("Đơn hàng chờ giao",orderDao.countOrderByStatus(2)));
-		res.getCountOrder().add(new CommonValueDTO("Đơn hàng đã giao",orderDao.countOrderByStatus(3)));
+		res.getCountOrder().add(new CommonValueDTO("Đơn hàng đang giao",orderDao.countOrderByStatus(3)));
 		res.getCountOrder().add(new CommonValueDTO("Đơn hàng hủy",orderDao.countOrderByStatus(0)));
 	}
 

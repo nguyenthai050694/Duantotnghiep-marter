@@ -74,6 +74,11 @@ public class OrderRestController {
 		return this.orderService.updateDeliveredOrder(id);
 	}
 
+	@GetMapping("/completed/{id}")
+	public OrderDTO updateCompletedOrder(@PathVariable("id") Integer id) {
+		return this.orderService.updateCompletedOrder(id);
+	}
+
 	@GetMapping("/find/{id}")
 	public OrderDTO finByID(@PathVariable("id") Integer id) {
 		return this.orderService.findById(id);

@@ -87,10 +87,23 @@ export default class OrderComponent extends React.Component {
             isLoading: true
         })
 
-        // Call Api order/findAll
-        const res = await axios.get(
-            `${process.env.REACT_APP_API_KEY}/order/findAll`, this.config
-        );
+        const params = new URL(window.location.href) as any;
+
+        const status = params.searchParams.get('status');
+
+        let res;
+
+        if (status) {
+            // Call Api order/find/id
+            res = await axios.get(
+                `${process.env.REACT_APP_API_KEY}/order/search?status=${status}`, this.config
+            ) as any;
+        } else {
+            // Call Api order/findAll
+            res = await axios.get(
+                `${process.env.REACT_APP_API_KEY}/order/findAll`, this.config
+            );
+        }
 
         // Map lstOrder
         const lstOrder = res.data && res.data.map((item: OrderItem) => {
@@ -138,6 +151,7 @@ export default class OrderComponent extends React.Component {
             ...this.state,
             lstOrder: lstOrder,
             isLoading: false,
+            status,
         })
 
     }
@@ -215,7 +229,7 @@ export default class OrderComponent extends React.Component {
     handCancelOrder = (id: number) => {
         confirmAlert({
             title: '',
-            message: 'Bạn có chắc chán muốn hủy đơn hàng?',
+            message: 'Bạn có chắc chắn muốn hủy đơn hàng?',
             buttons: [
                 {
                     label: 'Yes',
@@ -248,13 +262,46 @@ export default class OrderComponent extends React.Component {
     handDeliveredOrder = (id: number) => {
         confirmAlert({
             title: '',
-            message: 'Xác nhận đã giao hàng thành công!',
+            message: 'Xác nhận đang giao hàng!',
             buttons: [
                 {
                     label: 'Yes',
                     onClick: async () => {
                         let res = await axios.get(
                             `${process.env.REACT_APP_API_KEY}/order/delivered/${id}`, this.config
+                        );
+                        if (res.status === 200) {
+                            toast.success("Xác nhận thành công", styleToast);
+                            this.init()
+                        } else {
+                            toast.error("Xác nhận thất bại", styleToast);
+                        }
+                    }
+                },
+                {
+                    label: 'No',
+                    onClick: () => { }
+                },
+            ]
+        });
+
+    }
+
+    /**
+     * 
+     * @param id 
+     * Delivered order
+     */
+    handCompletedOrder = (id: number) => {
+        confirmAlert({
+            title: '',
+            message: 'Xác nhận hoàn tất đơn hàng!',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: async () => {
+                        let res = await axios.get(
+                            `${process.env.REACT_APP_API_KEY}/order/completed/${id}`, this.config
                         );
                         if (res.status === 200) {
                             toast.success("Xác nhận thành công", styleToast);

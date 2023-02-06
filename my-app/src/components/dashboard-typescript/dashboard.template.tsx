@@ -221,34 +221,40 @@ export default function DashboardTemplate({ self }: DashboardTemplate) {
 
             <Container>
                 <Row className='dashboard-row'>
-                    <Col md={12}>
-                        <Box sx={{ width: 500 }}>
-                            <BottomNavigation
-                                showLabels
-                                value={value}
-                                onChange={(event, newValue) => {
-                                    setValue(newValue);
-                                }}
-                            >
-                                <BottomNavigationAction label={`${state.count[0] && state.count[0].name}(${state.count[0] && state.count[0].count})`} icon={<PeopleIcon />} />
-                                <BottomNavigationAction label={`${state.count[1] && state.count[1].name}(${state.count[1] && state.count[1].count})`} icon={<StorageIcon />} />
-                                <BottomNavigationAction label={`${state.count[2] && state.count[2].name}(${state.count[2] && state.count[2].count})`} icon={<EmailIcon />} />
-                            </BottomNavigation>
+                    <Col md={12} className='d-flex'>
+                        <Box sx={{ width: 200 }}>
+                            <Link to={'#'} >
+                                <div className='box-icon'><PeopleIcon /></div>
+                                <div className='box-content'>{`${state.count[0]?.name || ''}(${state.count[0]?.count || ''})`}</div>
+                            </Link>
+                        </Box>
+                        <Box sx={{ width: 200 }}>
+                            <Link to={'/admin/product'} >
+                                <div className='box-icon'><StorageIcon /></div>
+                                <div className='box-content'>{`${state.count[1]?.name || ''}(${state.count[1]?.count || ''})`}</div>
+                            </Link>
+                        </Box>
+
+                        <Box sx={{ width: 200 }}>
+                            <Link to={'/admin/order'} >
+                                <div className='box-icon'><EmailIcon /></div>
+                                <div className='box-content'>{`${state.count[2]?.name || ''}(${state.count[2]?.count || ''})`}</div>
+                            </Link>
                         </Box>
                     </Col>
                 </Row>
                 <Row className='dashboard-row'>
                     <Col md={3}>
-                        <BoxInfo color='green' title='Trong 1 ngày' content={`${state.revenue[0]?.money} VND`} percen={state.revenue[0]?.percen} />
+                        <BoxInfo color='green' title='Trong 1 ngày' content={`${state.revenue[0]?.money || ''} VND`} percen={state.revenue[0]?.percen || 0} />
                     </Col>
                     <Col md={3}>
-                        <BoxInfo color='red' title='Trong 1 tuần' content={`${state.revenue[1]?.money} VND`} percen={state.revenue[1]?.percen} />
+                        <BoxInfo color='red' title='Trong 1 tuần' content={`${state.revenue[1]?.money || ''} VND`} percen={state.revenue[1]?.percen || 0} />
                     </Col>
                     <Col md={3}>
-                        <BoxInfo color='yellow' title='Trong 1 tháng' content={`${state.revenue[2]?.money} VND`} percen={state.revenue[2]?.percen} />
+                        <BoxInfo color='yellow' title='Trong 1 tháng' content={`${state.revenue[2]?.money || ''} VND`} percen={state.revenue[2]?.percen || 0} />
                     </Col>
                     <Col md={3}>
-                        <BoxInfo color='blue' title='Trong 1 năm' content={`${state.revenue[3]?.money} VND`} percen={state.revenue[3]?.percen} />
+                        <BoxInfo color='blue' title='Trong 1 năm' content={`${state.revenue[3]?.money || ''} VND`} percen={state.revenue[3]?.percen || 0} />
                     </Col>
                 </Row>
 
@@ -266,7 +272,7 @@ export default function DashboardTemplate({ self }: DashboardTemplate) {
                     <Col md={6} className='dashboadr-order'>
                         <Row>
                             <Col md={6} className='order-box br-r-2'>
-                                <Link to={'#'}>
+                                <Link to={'/admin/order?status=1'}>
                                     <div className='order-icon'><PlaylistAddIcon /></div>
                                     <div className='order-number'>
                                         {state.countOrder[0]?.value}
@@ -278,7 +284,7 @@ export default function DashboardTemplate({ self }: DashboardTemplate) {
                             </Col>
 
                             <Col md={6} className='order-box'>
-                                <Link to={'#'}>
+                                <Link to={'/admin/order?status=2'}>
                                     <div className='order-icon'>
                                         <LocalShippingIcon />
                                     </div>
@@ -292,7 +298,7 @@ export default function DashboardTemplate({ self }: DashboardTemplate) {
                             </Col>
 
                             <Col md={6} className='order-box br-r-2 br-t-2'>
-                                <Link to={'#'}>
+                                <Link to={'/admin/order?status=3'}>
                                     <div className='order-icon'>
                                         <CheckCircleOutlineIcon />
                                     </div>
@@ -306,7 +312,7 @@ export default function DashboardTemplate({ self }: DashboardTemplate) {
                             </Col>
 
                             <Col md={6} className='order-box br-t-2'>
-                                <Link to={'#'}>
+                                <Link to={'/admin/order?status=0'}>
                                     <div className='order-icon'>
                                         <CancelIcon />
                                     </div>
