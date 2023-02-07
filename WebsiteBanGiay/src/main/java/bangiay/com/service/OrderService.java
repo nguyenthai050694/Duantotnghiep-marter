@@ -2,6 +2,7 @@ package bangiay.com.service;
 
 import java.util.List;
 
+import bangiay.com.DTO.OrderCancelDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -41,4 +42,6 @@ public interface OrderService {
 	OrderDTO create(OrderDTO orderDTO, Integer user_Id, Integer voucher_Id);
 
 	public OrderDTO updateCompletedOrder(Integer id);
+
+	public OrderDTO updateReturnStatus(OrderCancelDTO orderCancelDTO);
 }

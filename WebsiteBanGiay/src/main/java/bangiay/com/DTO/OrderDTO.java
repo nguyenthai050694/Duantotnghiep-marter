@@ -24,5 +24,5 @@ public class OrderDTO {
 	private Timestamp returnAtDate;
 	private String description;
 	private Integer status;
-
+	private Integer returnStatus;
 }

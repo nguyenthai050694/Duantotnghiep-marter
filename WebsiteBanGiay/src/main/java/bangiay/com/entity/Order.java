@@ -48,6 +48,9 @@ public class Order {
 	@Column(name = "STATUS")
 	private Integer status;
 
+	@Column(name = "RETURNSTATUS")
+	private Integer returnStatus;
+
 	@Column(name = "RECAIVEATDATE")
 	private java.sql.Timestamp recaiveAtDate;
 

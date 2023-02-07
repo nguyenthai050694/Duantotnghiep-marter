@@ -2,6 +2,7 @@ package bangiay.com.rest.controller;
 
 import java.util.List;
 
+import bangiay.com.DTO.OrderCancelDTO;
 import bangiay.com.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -93,6 +94,11 @@ public class OrderRestController {
 	public ResponseEntity<?> updateOrderWithStatus(@RequestParam("id") Integer id,
 			@RequestParam("status") Integer status) {
 		return new ResponseEntity<>(orderService.updateOrderWithStatus(id, status), HttpStatus.OK);
+	}
+
+	@PostMapping("/updateReturnStatus")
+	public ResponseEntity<?> updateReturnStatus(@RequestBody OrderCancelDTO params) {
+		return new ResponseEntity<>(orderService.updateReturnStatus(params), HttpStatus.OK);
 	}
 
 }

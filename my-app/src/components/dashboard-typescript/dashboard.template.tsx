@@ -32,6 +32,8 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CancelIcon from '@mui/icons-material/Cancel';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import DangerousIcon from '@mui/icons-material/Dangerous';
 
 ChartJS.register(
     CategoryScale,
@@ -271,7 +273,7 @@ export default function DashboardTemplate({ self }: DashboardTemplate) {
 
                     <Col md={6} className='dashboadr-order'>
                         <Row>
-                            <Col md={6} className='order-box br-r-2'>
+                            <Col md={4} className='order-box br-r-2'>
                                 <Link to={'/admin/order?status=1'}>
                                     <div className='order-icon'><PlaylistAddIcon /></div>
                                     <div className='order-number'>
@@ -283,7 +285,7 @@ export default function DashboardTemplate({ self }: DashboardTemplate) {
                                 </Link>
                             </Col>
 
-                            <Col md={6} className='order-box'>
+                            <Col md={4} className='order-box br-r-2'>
                                 <Link to={'/admin/order?status=2'}>
                                     <div className='order-icon'>
                                         <LocalShippingIcon />
@@ -297,7 +299,7 @@ export default function DashboardTemplate({ self }: DashboardTemplate) {
                                 </Link>
                             </Col>
 
-                            <Col md={6} className='order-box br-r-2 br-t-2'>
+                            <Col md={4} className='order-box'>
                                 <Link to={'/admin/order?status=3'}>
                                     <div className='order-icon'>
                                         <CheckCircleOutlineIcon />
@@ -311,7 +313,7 @@ export default function DashboardTemplate({ self }: DashboardTemplate) {
                                 </Link>
                             </Col>
 
-                            <Col md={6} className='order-box br-t-2'>
+                            <Col md={4} className='order-box br-t-2 br-r-2'>
                                 <Link to={'/admin/order?status=0'}>
                                     <div className='order-icon'>
                                         <CancelIcon />
@@ -321,6 +323,34 @@ export default function DashboardTemplate({ self }: DashboardTemplate) {
                                     </div>
                                     <div className='order-title'>
                                         {state.countOrder[3]?.key}
+                                    </div>
+                                </Link>
+                            </Col>
+
+                            <Col md={4} className='order-box br-t-2 br-r-2'>
+                                <Link to={'/admin/order?status=11'}>
+                                    <div className='order-icon'>
+                                        <AutorenewIcon />
+                                    </div>
+                                    <div className='order-number'>
+                                        {state.countOrder[4]?.value}
+                                    </div>
+                                    <div className='order-title'>
+                                        {state.countOrder[4]?.key}
+                                    </div>
+                                </Link>
+                            </Col>
+
+                            <Col md={4} className='order-box br-t-2'>
+                                <Link to={'/admin/order?status=12'}>
+                                    <div className='order-icon'>
+                                        <DangerousIcon />
+                                    </div>
+                                    <div className='order-number'>
+                                        {state.countOrder[5]?.value}
+                                    </div>
+                                    <div className='order-title'>
+                                        {state.countOrder[5]?.key}
                                     </div>
                                 </Link>
                             </Col>

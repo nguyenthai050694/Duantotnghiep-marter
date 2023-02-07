@@ -5,7 +5,7 @@ import React from 'react'
 import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
 import { storage } from '../../Firebase';
-import { STATUS_ORDER, styleToast } from '../common/const';
+import { RETURN_STATUS_ORDER, STATUS_ORDER, styleToast } from '../common/const';
 import OrederTemplate from './order.template'
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -16,6 +16,7 @@ export interface OrderItem {
     created: String,
     nameRecipient: String,
     status: number,
+    returnStatus: number,
     statusName: string,
     telephone: String,
 }
@@ -108,15 +109,26 @@ export default class OrderComponent extends React.Component {
         // Map lstOrder
         const lstOrder = res.data && res.data.map((item: OrderItem) => {
             let statusName = ''
-            switch (item.status) {
-                case 0:
+            switch (item.returnStatus) {
                 case 1:
                 case 2:
                 case 3:
-                case 4:
-                    statusName = STATUS_ORDER[item.status]
+                case 5:
+                    statusName = RETURN_STATUS_ORDER[item.returnStatus]
                     break
             }
+            if (!statusName) {
+                switch (item.status) {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                        statusName = STATUS_ORDER[item.status]
+                        break
+                }
+            }
+
             return {
                 ...item,
                 created: moment(item.created as any).format('DD/MM/YYYY HH:mm:ss'),
@@ -320,6 +332,39 @@ export default class OrderComponent extends React.Component {
 
     }
 
+    /**
+    * 
+    * @param id 
+    * Delivered order
+    */
+    handUpdateReturnStatusOrder = (id: number, status: number, title: string) => {
+        confirmAlert({
+            title: '',
+            message: title,
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: async () => {
+                        let res = await axios.post(
+                            `${process.env.REACT_APP_API_KEY}/order/updateReturnStatus`, { id, status }, this.config
+                        );
+                        if (res.status === 200) {
+                            toast.success("Xác nhận thành công", styleToast);
+                            this.init()
+                        } else {
+                            toast.error("Xác nhận thất bại", styleToast);
+                        }
+                    }
+                },
+                {
+                    label: 'No',
+                    onClick: () => { }
+                },
+            ]
+        });
+
+    }
+
     handChangeStatus = async (e: any) => {
 
 
@@ -333,15 +378,26 @@ export default class OrderComponent extends React.Component {
             status: e.target.value,
             lstOrder: res.data.map((item: OrderItem) => {
                 let statusName = ''
-                switch (item.status) {
-                    case 0:
+                switch (item.returnStatus) {
                     case 1:
                     case 2:
                     case 3:
-                    case 4:
-                        statusName = STATUS_ORDER[item.status]
+                    case 5:
+                        statusName = RETURN_STATUS_ORDER[item.returnStatus]
                         break
                 }
+                if (!statusName) {
+                    switch (item.status) {
+                        case 0:
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                            statusName = STATUS_ORDER[item.status]
+                            break
+                    }
+                }
+
                 return {
                     ...item,
                     created: moment(item.created as any).format('DD/MM/YYYY HH:mm:ss'),

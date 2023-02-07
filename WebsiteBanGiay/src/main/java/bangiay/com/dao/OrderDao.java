@@ -19,6 +19,9 @@ public interface OrderDao extends JpaRepository <Order, Integer>{
 	@Query("SELECT o FROM Order o WHERE o.status=?1")
 	List<Order> findByStatus(Integer status);
 
+	@Query("SELECT o FROM Order o WHERE o.returnStatus=?1")
+	List<Order> findByReturnStatus(Integer status);
+
 	//lấy danh sách order có trạng thái theo yêu cầu
 //	@Query("select o from orders o where o.STATUS=?")
 //	List<Orders> getOrderStatus(Integer status);
@@ -31,8 +34,12 @@ public interface OrderDao extends JpaRepository <Order, Integer>{
 	@Query("SELECT COUNT(o) FROM Order o WHERE o.status = ?1")
 	long countOrderByStatus(Integer status);
 
+	//Count order by return_status
+	@Query("SELECT COUNT(o) FROM Order o WHERE o.returnStatus = ?1")
+	long countOrderByReturnStatus(Integer returnStatus);
+
 	@Query(
-			value = "SELECT o.id, o.created, od.quantity, od.price from Orders o, Order_detail od where o.id=od.order_id and date(o.created) >= ?1 and date(o.created) <= now() and o.status != 0",
+			value = "SELECT o.id, o.created, od.quantity, od.price from Orders o, Order_detail od where o.id=od.order_id and date(o.created) >= ?1 and date(o.created) <= now() and o.status != 0 and o.returnStatus != 3",
 			nativeQuery = true
 	)
 	List<Map<String, Object>>  getOrderDetailDashboard(Date date);

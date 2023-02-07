@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import bangiay.com.DTO.OrderCancelDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -60,6 +61,12 @@ public class OrderSeviceImpl implements OrderService {
 	public List<Order> findByStatus(Integer status) {
 		if(status == 99)
 			return orderDao.findAll();
+		else if(status == 11)
+			return orderDao.findByReturnStatus(1);
+		else if(status == 12)
+			return orderDao.findByReturnStatus(2);
+		else if(status == 13)
+			return orderDao.findByReturnStatus(3);
 		else
 			return orderDao.findByStatus(status);
 	}
@@ -161,4 +168,14 @@ public class OrderSeviceImpl implements OrderService {
 		return null;
 	}
 
+	@Override
+	public OrderDTO updateReturnStatus(OrderCancelDTO orderCancelDTO) {
+		Order order = this.orderDao.findById(orderCancelDTO.getId()).orElse(null);
+		if(orderCancelDTO.getStatus() == 4) {
+			order.setReturnAtDate(Timestamp.from(Instant.now()));
+		}
+		order.setReturnStatus(orderCancelDTO.getStatus());
+		this.orderDao.save(order);
+		return modelMapper.map(order, OrderDTO.class);
+	}
 }

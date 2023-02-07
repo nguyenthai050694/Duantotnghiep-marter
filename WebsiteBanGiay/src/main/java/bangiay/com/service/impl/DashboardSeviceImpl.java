@@ -205,6 +205,8 @@ public class DashboardSeviceImpl implements DashboardService {
 		res.getCountOrder().add(new CommonValueDTO("Đơn hàng chờ giao",orderDao.countOrderByStatus(2)));
 		res.getCountOrder().add(new CommonValueDTO("Đơn hàng đang giao",orderDao.countOrderByStatus(3)));
 		res.getCountOrder().add(new CommonValueDTO("Đơn hàng hủy",orderDao.countOrderByStatus(0)));
+		res.getCountOrder().add(new CommonValueDTO("Xác nhận trả hàng",orderDao.countOrderByReturnStatus(1)));
+		res.getCountOrder().add(new CommonValueDTO("Đơn hàng đang hoàn trả",orderDao.countOrderByReturnStatus(2)));
 	}
 
 	public void getListProduct(DashboardDTO res) {

@@ -4,7 +4,7 @@ import { Col, Container, Table } from 'reactstrap';
 import OrderComponent, { OrderDetailItem, OrderItem } from './order.component';
 import '../css/styles.css';
 import { Button, Modal, Row } from 'react-bootstrap';
-import { BsBagCheck, BsCheck, BsCheckCircle, BsFillEyeFill, BsTruck, BsXCircle } from "react-icons/bs";
+import { BsBagCheck, BsCheck, BsCheckCircle, BsFillEyeFill, BsTruck, BsX, BsXCircle } from "react-icons/bs";
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 import { STATUS_ORDER } from '../common/const';
 import EnhancedTable from '../common/table/table';
@@ -65,7 +65,6 @@ export default function OrederTemplate({ self }: OrederTemplate) {
             disablePadding: false,
             label: 'Hành động',
             component: (item: any) => {
-                console.log(item);
 
                 return <>
                     <button onClick={() => self.openModalDetail(item.id)}>
@@ -77,8 +76,20 @@ export default function OrederTemplate({ self }: OrederTemplate) {
                     {item.status === 3 && <button onClick={() => self.handCompletedOrder(item.id)}>
                         <BsCheckCircle title='Xác nhận hoàn tất đơn hàng' />
                     </button>}
-                    {item.status !== 0 && <button onClick={() => self.handCancelOrder(item.id)}>
+                    {(item.status === 1 || item.status === 2) && <button onClick={() => self.handCancelOrder(item.id)}>
                         <BsXCircle title='Hủy đơn hàng' />
+                    </button>}
+                    {item.returnStatus === 1 && <>
+                        <button onClick={() => self.handUpdateReturnStatusOrder(item.id, 2, 'Đồng ý trả hàng!')}>
+                            <BsCheck title='Đồng ý trả hàng' />
+                        </button>
+
+                        <button onClick={() => self.handUpdateReturnStatusOrder(item.id, 5, 'Từ chối trả hàng!')}>
+                            <BsX title='Từ chối trả hàng' />
+                        </button>
+                    </>}
+                    {item.returnStatus === 2 && <button onClick={() => self.handUpdateReturnStatusOrder(item.id, 3, 'Xác nhận hoàn tất trả hàng!')}>
+                        <BsCheckCircle title='Xác nhận hoàn tất đơn hàng' />
                     </button>}
                 </>
             }
@@ -152,6 +163,9 @@ export default function OrederTemplate({ self }: OrederTemplate) {
                                     <MenuItem value={3}>Đã giao hàng</MenuItem>
                                     <MenuItem value={4}>Hoàn tất</MenuItem>
                                     <MenuItem value={0}>Hủy</MenuItem>
+                                    <MenuItem value={11}>Yêu cầu trả hàng</MenuItem>
+                                    <MenuItem value={12}>Đang trả hàng</MenuItem>
+                                    <MenuItem value={13}>Hoàn tất trả hàng</MenuItem>
                                 </Select>
                             </FormControl>
                         </Box>
